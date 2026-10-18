@@ -1,0 +1,12 @@
+name: CI
+
+on:
+  workflow_dispatch:
+
+jobs:
+  scaffold:
+    name: Scaffold placeholder
+    runs-on: ubuntu-latest
+    steps:
+      - name: Explain current status
+        run: echo "CI checks will be enabled after backend and frontend test scripts are added."
