@@ -106,11 +106,11 @@ Nguyên tắc xuyên suốt: **LLM không tự nghĩ ra dữ liệu**. Code luô
 
 ```bash
 # 1. Lấy mã nguồn
-git clone https://github.com/<ten-nguoi-dung>/boardgame-advisor.git
-cd boardgame-advisor
+git clone https://github.com/anonymosol/CDTT2.git
+cd CDTT2
 
 # 2. Tạo file môi trường
-cp .env.example .env
+cp backend/.env.example backend/.env
 # Mở .env và điền các giá trị (xem bảng bên dưới)
 
 # 3. Chạy cơ sở dữ liệu
@@ -250,3 +250,7 @@ Giảng viên hướng dẫn: _điền tên_ — Môn học: _điền tên môn_
 - Nhật ký ván chơi chi tiết (ngày, số người, thời lượng thực tế).
 - Nhận diện bàn chơi bằng ảnh để hỗ trợ tính điểm.
 - Ứng dụng di động gốc.
+
+## Giấy phép
+
+Chọn một giấy phép phù hợp (ví dụ MIT) và thêm file `LICENSE`. Lưu ý giấy phép này chỉ áp dụng cho mã nguồn, không áp dụng cho nội dung luật chơi của bên thứ ba.
