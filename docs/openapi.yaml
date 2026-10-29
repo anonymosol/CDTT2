@@ -8,4 +8,35 @@ info:
 servers:
   - url: http://localhost:3000
     description: Local development
-paths: {}
+paths: 
+  /api/games:
+    get:
+      sumary: List avalaible boardgames
+      responses:
+        '200':
+         description: A list of boardgames
+         content:
+           application/json:
+             schema:
+               type: array
+               items:
+                 $ref: '#/components/schemas/Game'
+
+components:
+  schemas:
+    Game:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+        name: 
+          type: string
+        minPlayers:
+          type: integer
+        maxPlayers:
+          type: integer
+        duration:
+          type: integer
