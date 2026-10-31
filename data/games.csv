@@ -1,1 +1,15 @@
 id,name,players_min,players_max,play_time_min,play_time_max,weight,genres,description,source_url
+ti-len,Tiến Lên,2,4,10,40,1.5,"card;family","Game bài dân gian Việt Nam: lần lượt đánh tổ hợp mạnh hơn hoặc bỏ lượt, có chặt heo và tứ quý chặn; ai thoát bài trước thì thắng.",https://en.wikipedia.org/wiki/Ti%E1%BA%BFn_l%C3%AAn
+phom,Phỏm (Tá Lả),2,4,15,45,1.5,"card;family","Game bài ghép phỏm (sảnh hoặc cạ) dân gian Việt Nam; hạ phỏm và gửi bài để giảm điểm phạt, ai về nhì được ù hoặc ít điểm nhất thắng.",https://vi.wikipedia.org/wiki/Ph%E1%BB%8Fm
+xi-dach,Xì Dách,2,6,10,30,1,"card;family","Biến thể Việt Nam của Blackjack: rút bài để có tổng gần 21 mà không quắc, sau đó so bài với nhà cái.",https://vi.wikipedia.org/wiki/X%C3%AC_d%C3%A1ch
+co-tuong,Cờ Tướng,2,2,10,60,3,"abstract;strategy","Cờ bàn cổ phương Đông: 32 quân trên bàn 9x10 có sông và cung, chiếu hết tướng đối phương để thắng.",https://en.wikipedia.org/wiki/Xiangqi
+co-vua,Cờ Vua,2,2,10,120,3.5,"abstract;strategy","Cờ bàn kinh điển quốc tế: 32 quân trên bàn 8x8, chiếu hết vua đối phương để thắng.",https://en.wikipedia.org/wiki/Chess
+co-caro,Cờ Caro (Gomoku),2,2,5,20,1,"abstract;children","Trò giấy bút hai người: đặt quân xen kẽ trên lưới, ai tạo được 5 quân thẳng hàng (ngang dọc chéo) trước thì thắng.",https://en.wikipedia.org/wiki/Gomoku
+co-ca-ngua,Cờ Cá Ngựa,2,4,15,45,1,"dice;family;children","Phiên bản Ludo của Việt Nam: tung xúc xắc đưa 4 quân ngựa từ chuồng về đích, được ăn quân khi đè đúng ô đối phương.",https://en.wikipedia.org/wiki/Ludo_(board_game)
+domino,Domino Chặn,2,4,10,30,1.5,"tiles;family","Trò gạch domino: lần lượt đặt quân khớp đầu số trùng nhau, người thoát hết quân hoặc giữ ít điểm nhất khi bị chặn sẽ thắng.",https://en.wikipedia.org/wiki/Dominoes
+co-dam,Cờ Dam,2,2,10,30,1,"abstract;children","Cờ dam (draughts) bàn 8x8: di chuyển chéo và nhảy bắt quân đối phương, ăn hết hoặc kẹt quân đối thủ để thắng.",https://en.wikipedia.org/wiki/Draughts
+backgammon,Backgammon,2,2,15,60,2.5,"dice;strategy","Cờ xúc xắc cổ: tung xúc xắc đưa 15 quân về nhà rồi khỏi bàn trước đối thủ, có chặn điểm và bắt quân.",https://en.wikipedia.org/wiki/Backgammon
+crazy-eights,Crazy Eights,2,7,10,30,1,"card;family","Game bài đề cử quốc tế: đánh quân cùng chất hoặc cùng số, quân 8 được đổi chất tùy ý; là nguồn gốc của UNO.",https://en.wikipedia.org/wiki/Crazy_Eights
+mau-mau,Mau-Mau,2,5,10,30,1,"card;family","Game bài dân gian Đức tương tự Crazy Eights: đánh cùng chất hoặc cùng số, quân J buộc đối thủ rút thêm bài.",https://en.wikipedia.org/wiki/Mau-Mau_(card_game)
+yacht,Yacht,2,5,15,30,1,"dice;family","Tung 5 xúc xắc trong 3 lượt để lập các tổ hợp (cù lũ, sảnh, bốn điểm giống nhau...) và ghi điểm theo bảng; bản gốc public domain của Yahtzee.",https://en.wikipedia.org/wiki/Yacht_(dice_game)
+danh-tau,Đánh Tàu,2,2,10,25,1,"deduction;family","Trò giấy bút hai người: bí mật đặt tàu trên lưới tọa độ rồi lần lượt bắn tọa độ để tìm và hạ hết tàu của đối phương.",https://en.wikipedia.org/wiki/Battleship_(game)
