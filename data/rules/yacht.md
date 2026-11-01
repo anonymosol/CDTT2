@@ -1,7 +1,8 @@
 # Yacht
 
-> Bộ luật do nhóm tự soạn làm bản quy ước chuẩn của sản phẩm; nguồn tham khảo
-> xem `data/LICENSES.md`. Đây là bản gốc public domain, không phải luật
+> Bộ luật do nhóm tự soạn làm bản quy ước chuẩn của sản phẩm, đã đối chiếu
+> trực tiếp với bài nguồn trên Wikipedia (xem `data/LICENSES.md`, ngày đối
+> chiếu 2026-11-01). Đây là bản gốc public domain, không phải luật
 > Yahtzee thương mại của Hasbro.
 
 ## 1. Mục tiêu
@@ -35,7 +36,7 @@ mục bảng điểm.
 |---|---|---|
 | Ones → Sixes (6 mục) | Đếm số chấm bằng mặt tương ứng | Tổng các chấm mặt đó |
 | Full house | 3 xúc xắc giống nhau + 2 xúc xắc giống nhau | Tổng cả 5 xúc xắc |
-| Four of a kind | Có 4 xúc xắc cùng một mặt | Tổng cả 5 xúc xắc |
+| Four of a kind | Có 4 xúc xắc cùng một mặt | Tổng 4 xúc xắc giống nhau (lá thứ 5 không tính) |
 | Sảnh nhỏ | Có đủ bộ {1,2,3,4,5} | 30 |
 | Sảnh lớn | Có đủ bộ {2,3,4,5,6} | 30 |
 | Tùy chọn (Choice) | Không có điều kiện | Tổng cả 5 xúc xắc |

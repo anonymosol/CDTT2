@@ -1,7 +1,8 @@
 # Cờ Tướng
 
-> Bộ luật do nhóm tự soạn làm bản quy ước chuẩn của sản phẩm; nguồn tham khảo
-> xem `data/LICENSES.md`.
+> Bộ luật do nhóm tự soạn làm bản quy ước chuẩn của sản phẩm, đã đối chiếu
+> trực tiếp với bài nguồn trên Wikipedia (xem `data/LICENSES.md`, ngày đối
+> chiếu 2026-11-01).
 
 ## 1. Mục tiêu
 

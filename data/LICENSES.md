@@ -13,6 +13,11 @@ attribution requirements, and the date it was checked.
   wording**, using the cited article as factual reference. Wikipedia text is
   CC BY-SA 4.0 — if we paraphrase wording beyond plain facts from it, the
   rule document must link the source and keep the share-alike spirit.
+- On **2026-11-01** every rule document was reconciled directly against its
+  cited Wikipedia article. Where the product deliberately keeps a house rule
+  (or the source has several variants), the document labels it as a product
+  convention ("quy ước của sản phẩm") instead of presenting it as the
+  source's rule.
 - `games.csv` metadata (player counts, durations, difficulty) are facts.
 
 | Game | Material | Source | License / permission | Attribution / restrictions |
@@ -33,6 +38,7 @@ attribution requirements, and the date it was checked.
 | Đánh Tàu | Metadata; team-written rules doc (planned) | https://en.wikipedia.org/wiki/Battleship_(game) | Traditional pencil-and-paper game (public domain); article CC BY-SA 4.0 | Do not copy the Milton Bradley/Hasbro commercial product rules; folk paper version only |
 
 Checked on: 2026-10-31 (all source URLs verified reachable, HTTP 200).
+Article contents reconciled against rule documents: 2026-11-01.
 
 Do not add commercial rulebooks or other copyrighted rules text unless the
 project has permission to use and redistribute it. When a new game is added

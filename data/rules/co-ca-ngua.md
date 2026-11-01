@@ -1,7 +1,8 @@
 # Cờ Cá Ngựa (Ludo kiểu Việt Nam)
 
-> Bộ luật do nhóm tự soạn làm bản quy ước chuẩn của sản phẩm; nguồn tham khảo
-> xem `data/LICENSES.md`.
+> Bộ luật do nhóm tự soạn làm bản quy ước chuẩn của sản phẩm, đã đối chiếu
+> trực tiếp với bài nguồn trên Wikipedia (xem `data/LICENSES.md`, ngày đối
+> chiếu 2026-11-01).
 
 ## 1. Mục tiêu
 
@@ -24,13 +25,16 @@
 ### 4.1 Ra ngựa và di chuyển
 
 - **Ra ngựa**: tung được 6 thì đưa 1 ngựa từ chuồng ra ô xuất phát màu của
-  mình. Tung 6 được đi thêm một lượt.
+  mình. Tung 6 được đi thêm một lượt; tung 6 ba lần liên tiếp thì mất lượt
+  đi (theo nguồn).
 - **Di chuyển**: theo chiều kim đồng hồ quanh đường vòng, đúng số ô trên
   xúc xắc; mỗi ô chỉ đứng 1 ngựa trừ khi quy ước khác.
 - **Ăn ngựa**: đi đến ô có ngựa đối phương thì ngựa đó bị bắt, quay về chuồng
   và phải tung 6 mới ra lại.
-- **Ô an toàn**: ô xuất phát của từng màu và các ô tô màu trên đường vòng —
-  ngựa đứng đó không bị ăn.
+- **Ô an toàn**: bản gốc quy định các ô trên **đường về** luôn an toàn vì
+  đối phương không thể vào; quy ước phổ biến mà sản phẩm dùng là thêm ô xuất
+  phát của từng màu và các ô tô màu trên đường vòng — ngựa đứng đó không bị
+  ăn.
 
 ### 4.2 Về đích
 
@@ -54,8 +58,7 @@
 
 ## 7. Biến thể thường gặp
 
-- Ra ngựa khi tung 1 **hoặc** 6; tung 6 đi thêm lượt bị giới hạn (3 lần 6
-  liên tiếp bị phạt ở một số nhóm).
+- Ra ngựa khi tung 1 **hoặc** 6 — một số nhóm cho phép.
 - Bán ngựa / chia ngựa khi chỉ có 3 người để cân bằng sức.
 - Bước "nảy" lùi khi vượt số ô cần thiết — một số nhóm cho phép; bản chuẩn
   của sản phẩm yêu cầu bước đúng số ô.

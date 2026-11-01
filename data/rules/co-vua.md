@@ -1,7 +1,8 @@
 # Cờ Vua
 
-> Bộ luật do nhóm tự soạn làm bản quy ước chuẩn của sản phẩm; nguồn tham khảo
-> xem `data/LICENSES.md`. Tài liệu này là tóm tắt của nhóm, không sao chép văn
+> Bộ luật do nhóm tự soạn làm bản quy ước chuẩn của sản phẩm, đã đối chiếu
+> trực tiếp với bài nguồn trên Wikipedia (xem `data/LICENSES.md`, ngày đối
+> chiếu 2026-11-01). Tài liệu này là tóm tắt của nhóm, không sao chép văn
 > bản Luật cờ vua của FIDE (có bản quyền).
 
 ## 1. Mục tiêu
