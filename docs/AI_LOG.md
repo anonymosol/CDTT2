@@ -40,6 +40,10 @@ For each entry, capture:
      `npm install-scripts approve` + `npm rebuild`.
   5. Chạy generator trên nhánh tách từ main khi `data/` còn trống → ra 0
      game; phải chạy trên nhánh có dữ liệu rồi commit artifact.
+  6. Thiếu `public/mockServiceWorker.js` (phải chạy `npx msw init public/`)
+     khiến `npm run dev` ra trang trắng — test không phát hiện vì dùng MSW
+     node server; phát hiện khi demo bằng trình duyệt thật. Đã sửa + thêm
+     fallback render khi worker mock lỗi.
 - **Cần người review:** đề xuất hợp đồng API trong `src/api/types.ts` cần
   bạn 1–2 chính thức hóa vào `openapi.yaml` rồi cả nhóm duyệt; khung UI là
   placeholder chờ bạn 3 thay design system; mock trả lời bằng tìm từ khóa

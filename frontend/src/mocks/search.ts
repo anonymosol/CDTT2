@@ -128,7 +128,11 @@ export function answerFromIndex(
     gameId: entry.gameId,
     section: entry.section,
     title: entry.title,
-    snippet: entry.body.join(' ').trim().slice(0, 220),
+    snippet: entry.body
+      .join(' ')
+      .replace(/\*\*/g, '')
+      .trim()
+      .slice(0, 220),
   }));
 
   return { found: true, answer, citations };
