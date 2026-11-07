@@ -4,6 +4,12 @@ Website gợi ý boardgame và hướng dẫn luật chơi, tích hợp LLM. Đ�
 
 > **Trạng thái:** đang phát triển. Các lệnh và cấu trúc thư mục bên dưới là thiết kế dự kiến, hãy chỉnh lại cho khớp với repo khi code đã ổn định.
 
+**Cập nhật frontend 07/11/2026:** đã có bản Frontend Khám phá chạy độc lập bằng
+MSW, với tìm/lọc game, gợi ý mẫu, kệ khách IndexedDB, giao diện tài khoản và gộp
+kệ. Bắt đầu bằng [frontend/README.md](frontend/README.md); hướng dẫn học theo mã
+ở [docs/FRONTEND_GUIDE.md](docs/FRONTEND_GUIDE.md). Backend nghiệp vụ/LLM thật
+chưa tích hợp. Các schema mới trong OpenAPI là đề xuất cần nhóm review bằng PR.
+
 ## Mục lục
 
 - [Giới thiệu](#giới-thiệu)
