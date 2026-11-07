@@ -15,7 +15,15 @@ import mockData from './data.json';
 const games = structuredClone(mockData.games) as Game[];
 const rules = structuredClone(mockData.rules) as Record<string, RuleDoc>;
 const learnPacks = structuredClone(mockData.learn) as Record<string, unknown>;
-const seedQuestions = mockData.seedQuestions as { id: string; game: string; question: string }[];
+const teachPacks = structuredClone(mockData.teach) as Record<string, unknown>;
+const seedQuestions = mockData.seedQuestions as {
+  id: string;
+  game: string;
+  type: string;
+  question: string;
+  answer?: string;
+  anchor?: string;
+}[];
 
 let index = buildSearchIndex(rules);
 const feedback: FeedbackItem[] = [];
@@ -52,6 +60,22 @@ export const handlers = [
       );
     }
     return HttpResponse.json({ ...pack, game });
+  }),
+
+  http.get('/api/games/:gameId/teach', ({ params }) => {
+    const gameId = String(params.gameId);
+    const game = findGame(gameId);
+    const steps = teachPacks[gameId];
+    if (!game || !steps) {
+      return HttpResponse.json(
+        { error: 'Chưa có bộ luật cho game này' },
+        { status: 404 },
+      );
+    }
+    const quiz = seedQuestions
+      .filter((q) => q.game === gameId && q.type === 'factual' && q.answer)
+      .map((q) => ({ id: q.id, question: q.question, answer: q.answer ?? '', anchor: q.anchor ?? '' }));
+    return HttpResponse.json({ game, steps, quiz });
   }),
 
   http.post('/api/rules/ask', async ({ request }) => {

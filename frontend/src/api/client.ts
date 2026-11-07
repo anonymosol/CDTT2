@@ -7,6 +7,7 @@ import type {
   LearnPack,
   QuestionStat,
   RulesAnswer,
+  TeachPack,
 } from './types';
 
 const BASE = '/api';
@@ -27,6 +28,8 @@ export const api = {
   listGames: () => request<Game[]>('/games'),
 
   getLearn: (gameId: string) => request<LearnPack>(`/games/${encodeURIComponent(gameId)}/learn`),
+
+  getTeach: (gameId: string) => request<TeachPack>(`/games/${encodeURIComponent(gameId)}/teach`),
 
   askRules: (payload: AskPayload) =>
     request<RulesAnswer>('/rules/ask', { method: 'POST', body: JSON.stringify(payload) }),

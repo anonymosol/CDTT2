@@ -7,6 +7,7 @@ import { resetMocksState } from '../mocks/handlers';
 beforeAll(() => server.listen({ onUnhandledRequest: 'error' }));
 afterEach(() => {
   cleanup();
+  localStorage.clear();
   server.resetHandlers();
   resetMocksState();
 });

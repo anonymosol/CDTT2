@@ -2,6 +2,8 @@ import { Link, Navigate, NavLink, Route, Routes } from 'react-router-dom';
 import LearnPage from './pages/LearnPage';
 import RulesAskPage from './pages/RulesAskPage';
 import AdminPage from './pages/AdminPage';
+import TeachPage from './pages/TeachPage';
+import ScoreToolPage from './pages/ScoreToolPage';
 
 const navClass = ({ isActive }: { isActive: boolean }) =>
   `rounded-lg px-3 py-1.5 ${
@@ -25,6 +27,9 @@ export default function App() {
             <NavLink to="/games/ti-len/rules" className={navClass}>
               Hỏi đáp
             </NavLink>
+            <NavLink to="/tools/score" className={navClass}>
+              Công cụ
+            </NavLink>
             <NavLink to="/admin" className={navClass}>
               Quản trị
             </NavLink>
@@ -36,6 +41,8 @@ export default function App() {
           <Route path="/" element={<Navigate to="/games/ti-len/learn" replace />} />
           <Route path="/games/:gameId/learn" element={<LearnPage />} />
           <Route path="/games/:gameId/rules" element={<RulesAskPage />} />
+          <Route path="/games/:gameId/teach" element={<TeachPage />} />
+          <Route path="/tools/score" element={<ScoreToolPage />} />
           <Route path="/admin" element={<AdminPage />} />
           <Route path="*" element={<p className="text-stone-500">Không tìm thấy trang.</p>} />
         </Routes>

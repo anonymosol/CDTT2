@@ -78,6 +78,28 @@ export interface FeedbackItem extends FeedbackPayload {
   createdAt: string;
 }
 
+/** GET /api/games/:id/teach — chế độ dạy luật từng phần + quiz tự kiểm tra. */
+export interface TeachStep {
+  num: string;
+  title: string;
+  paragraphs: string[];
+  bullets: string[];
+}
+
+export interface QuizQuestion {
+  id: string;
+  question: string;
+  answer: string;
+  /** Số mục trong bộ luật để đọc lại nếu trả lời sai. */
+  anchor: string;
+}
+
+export interface TeachPack {
+  game: Game;
+  steps: TeachStep[];
+  quiz: QuizQuestion[];
+}
+
 export interface QuestionStat {
   gameId: string;
   gameName: string;

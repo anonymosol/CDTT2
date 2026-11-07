@@ -53,3 +53,25 @@ For each entry, capture:
 > Lưu ý merge: nhánh này tách từ `main`, các entry 2026-10-31/11-01 khác
 > nằm ở PR #12 — khi merge hai PR sẽ xung đột nhẹ ở file này, giữ cả hai
 > phần entry theo thứ tự thời gian.
+
+### 2026-11-08 — thành viên 4 — hoàn thiện phần "nếu còn thời gian" + tài liệu
+
+- **Tool/model:** ZCode (agent GLM).
+- **Task:** hiện thực nốt 2 mục "nếu còn thời gian" của khung 5.5 — chế độ
+  dạy luật (stepper từng mục + quiz tự kiểm tra lấy từ `eval/questions.json`)
+  và công cụ tính điểm/đếm lượt (localStorage); soạn trước kế hoạch thử
+  nghiệm người dùng (`docs/testing/user-testing-plan.md`) và nguyên liệu
+  chương AI agent phần thành viên 4 (`docs/report/04-ai-workflow-member4.md`).
+- **Prompt:** "Kiểm tra còn làm được việc gì nữa trong phân công của tôi hãy làm".
+- **Kết quả chấp nhận:** 18/18 test (thêm 5 test mới: teach 3, score 2);
+  typecheck/lint/build xanh; xác minh trên trình duyệt thật (quiz chạy được
+  end-to-end, nav "Công cụ" xuất hiện).
+- **Lỗi AI mắc phải / cách sửa:**
+  1. Quiz card dùng nút trùng tên "Xem đáp án" → test phải scope `within(card)`.
+  2. RTL `getByText` chỉ khớp text node trực tiếp — "Đến lượt: Lan" tách span
+     không khớp → gắn `aria-label` cho dòng lượt (tăng a11y đồng thời).
+  3. `localStorage` leak giữa các test → `afterEach(clear)`.
+  4. Checkout nhánh dữ liệu bằng `-f` làm mất generate.py chưa commit + ghi
+     đè data.json (tracked trên nhánh frontend) — phải materialize dữ liệu
+     bằng `git show` với đường dẫn tuyệt đối rồi chạy generator tại chỗ.
+- **Thời gian:** với AI khoảng 1 giờ; tự làm ước tính 1 ngày.

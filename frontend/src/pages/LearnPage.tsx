@@ -89,12 +89,20 @@ export default function LearnPage() {
           <span>⚖ độ khó {game.weight}/5</span>
           <span>{game.genres.join(', ')}</span>
         </div>
-        <Link
-          to={`/games/${game.id}/rules`}
-          className="mt-3 inline-block rounded-lg bg-amber-700 px-3 py-1.5 text-sm font-medium text-white hover:bg-amber-800"
-        >
-          Hỏi đáp luật →
-        </Link>
+        <div className="mt-3 flex flex-wrap gap-2">
+          <Link
+            to={`/games/${game.id}/rules`}
+            className="rounded-lg bg-amber-700 px-3 py-1.5 text-sm font-medium text-white hover:bg-amber-800"
+          >
+            Hỏi đáp luật →
+          </Link>
+          <Link
+            to={`/games/${game.id}/teach`}
+            className="rounded-lg border border-amber-700 px-3 py-1.5 text-sm font-medium text-amber-800 hover:bg-amber-50"
+          >
+            Chế độ dạy luật →
+          </Link>
+        </div>
       </div>
 
       <section aria-label="Tóm tắt 5 phút" className="flex flex-col gap-3">

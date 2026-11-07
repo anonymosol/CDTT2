@@ -133,16 +133,20 @@ def main():
                 'sourceUrl': r['source_url'],
                 'hasRules': (DATA / 'rules' / f"{r['id']}.md").exists(),
             })
-    rules, learn = {}, {}
+    rules, learn, teach = {}, {}, {}
     for gp in sorted((DATA / 'rules').glob('*.md')):
         doc = parse_rule_doc(gp)
         rules[gp.stem] = doc
         learn[gp.stem] = build_learn(doc)
-    questions = [
-        {'id': q['id'], 'game': q['game'], 'type': q['type'], 'question': q['question']}
-        for q in json.loads((ROOT / 'eval' / 'questions.json').read_text(encoding='utf-8'))
-    ]
-    payload = {'games': games, 'rules': rules, 'learn': learn, 'seedQuestions': questions}
+        teach[gp.stem] = [block_of(s) for s in doc['sections']]
+    questions = []
+    for q in json.loads((ROOT / 'eval' / 'questions.json').read_text(encoding='utf-8')):
+        entry = {'id': q['id'], 'game': q['game'], 'type': q['type'], 'question': q['question']}
+        if q['type'] == 'factual':
+            entry['answer'] = q['expected']['answer']
+            entry['anchor'] = q['expected']['anchor']['section']
+        questions.append(entry)
+    payload = {'games': games, 'rules': rules, 'learn': learn, 'teach': teach, 'seedQuestions': questions}
     OUT.write_text(json.dumps(payload, ensure_ascii=False), encoding='utf-8')
     print(f"OK: {len(games)} games, {len(rules)} rule docs, {len(questions)} seed questions -> {OUT.name} ({OUT.stat().st_size // 1024}KB)")
 
