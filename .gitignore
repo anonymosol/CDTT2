@@ -9,3 +9,4 @@ coverage/
 backend/.cache/
 eval/results/*
 !eval/results/.gitkeep
+.vite/
