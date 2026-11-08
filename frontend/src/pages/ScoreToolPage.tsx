@@ -41,9 +41,17 @@ export default function ScoreToolPage() {
 
   function addPlayer(e: React.FormEvent) {
     e.preventDefault();
-    const name = newName.trim();
-    if (!name) return;
-    setState((s) => ({ ...s, players: [...s.players, { name, score: 0 }] }));
+    const base = newName.trim();
+    if (!base) return;
+    setState((s) => {
+      // Trùng tên thì thêm hậu tố số thứ tự để nút bấm không nhập nhằng
+      let name = base;
+      let n = 2;
+      while (s.players.some((p) => p.name === name)) {
+        name = `${base} (${n++})`;
+      }
+      return { ...s, players: [...s.players, { name, score: 0 }] };
+    });
     setNewName('');
   }
 

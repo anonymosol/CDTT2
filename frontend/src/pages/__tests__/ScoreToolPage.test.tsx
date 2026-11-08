@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it } from 'vitest';
 import ScoreToolPage from '../ScoreToolPage';
@@ -15,6 +15,18 @@ describe('ScoreToolPage — tính điểm và đếm lượt', () => {
     expect(screen.getByLabelText('Điểm của Lan')).toHaveTextContent('1');
     await user.click(screen.getByRole('button', { name: 'Trừ 5 điểm cho Minh' }));
     expect(screen.getByLabelText('Điểm của Minh')).toHaveTextContent('-5');
+  });
+
+  it('tên trùng được thêm hậu tố số thứ tự', async () => {
+    const user = userEvent.setup();
+    render(<ScoreToolPage />);
+    const input = await screen.findByRole('textbox', { name: 'Tên người chơi mới' });
+    await user.type(input, 'Lan');
+    await user.click(screen.getByRole('button', { name: 'Thêm' }));
+    await user.type(input, 'Lan');
+    await user.click(screen.getByRole('button', { name: 'Thêm' }));
+    expect(screen.getByText('Lan (2)')).toBeInTheDocument();
+    expect(within(screen.getByRole('list')).getAllByText('Lan')).toHaveLength(1);
   });
 
   it('hết lượt chuyển người và đếm vòng khi quay lại người đầu', async () => {
