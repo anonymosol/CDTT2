@@ -1,4 +1,4 @@
-# Kết quả Frontend Khám phá — bản bàn giao 07/11/2026
+# Kết quả Frontend Khám phá — rà soát 13/11/2026
 
 ## Bài toán và phạm vi
 
@@ -8,14 +8,13 @@ Phần giao diện phải dùng được khi chưa đăng nhập và phản ánh
 
 Phạm vi bản này là Thành viên 3: hệ thống thiết kế, khung ứng dụng, tìm/lọc,
 chi tiết, gợi ý, onboarding, kệ cá nhân, tài khoản/gộp khách, PWA và kiểm thử.
-Có trang làm quen luật tối thiểu để bàn giao. Hỏi luật RAG và quản trị chưa được
-triển khai trong phạm vi này.
+Thẻ game cung cấp bốn thao tác trạng thái độc lập và chấm sao.
 
 ## Giải pháp
 
 - React + TypeScript tổ chức page/component. React Router quản lý điều hướng.
 - Tailwind qua Vite và CSS chung định nghĩa hệ thống thiết kế.
-- OpenAPI là hợp đồng; openapi-typescript sinh kiểu và openapi-fetch gọi API.
+- openapi-typescript sinh kiểu từ bản nháp Khám phá, tham chiếu schema Game trong hợp đồng chung. openapi-fetch gọi API.
 - Zod kiểm tra dữ liệu lúc chạy, vì kiểu TypeScript không xác thực response mạng.
 - MSW mô phỏng API trong demo; live không tự thay dịch vụ lỗi bằng mẫu.
 - URL giữ bộ lọc. AbortController hủy request cũ; có timeout 20 giây.
@@ -27,7 +26,7 @@ triển khai trong phạm vi này.
 
 | Chức năng | Kết quả và giới hạn |
 |---|---|
-| Danh sách/bộ lọc | Có số người, thời gian, độ khó, thể loại, tên, sort, page và URL |
+| Danh sách/bộ lọc | Có số người, thời gian, độ khó, thể loại, tên, page và URL |
 | Chi tiết | Hiển thị metadata, thông tin thiếu, nhãn, sao và ghi chú |
 | Gợi ý | Có UI và endpoint mock; lọc từ khóa trong 12 game hư cấu, chưa gọi LLM |
 | Kệ khách | Lưu IndexedDB thật, giữ qua reload |
@@ -35,7 +34,6 @@ triển khai trong phạm vi này.
 | Gộp kệ | Có lỗi/retry, chính sách xung đột và giữ dữ liệu khi thất bại |
 | Onboarding | Đánh dấu game từng chơi, chấm sao, bỏ qua |
 | Google | UI hiển thị chưa khả dụng trong demo; chưa có OAuth thật |
-| Xuất/xóa dữ liệu | Giao diện và API mock; backend thật chưa hiện thực |
 | PWA | Live build có manifest, icon, worker, offline shell và thông báo cập nhật |
 | Responsive | Kiểm tra 360/390/768/1440 px; chưa thử thiết bị thật/Safari |
 
@@ -53,8 +51,8 @@ triển khai trong phạm vi này.
 
 - Kiểm tra kiểu TypeScript và sinh kiểu từ hợp đồng API.
 - 15 kiểm thử logic/component: điều kiện cứng, metadata thiếu, tìm không dấu,
-  thứ tự sort, gợi ý, merge idempotent, IndexedDB và GameCard.
-- 16 kiểm thử Playwright: 8 tình huống trên desktop và viewport di động Chromium.
+  gợi ý, gộp có thể thử lại, IndexedDB và các thao tác nhanh trên GameCard.
+- 16 kiểm thử Playwright: 8 tình huống thuộc ba luồng trên desktop và viewport di động Chromium.
   Bao gồm bộ lọc/reload/chi tiết, kệ khách, gợi ý, gộp thất bại, 503/429,
   đường dẫn trực tiếp, phiên hết hạn và điều hướng bàn phím.
 - Kiểm tra trực quan 6 route ở 4 độ rộng; kiểm tra không tràn ngang.

@@ -1,4 +1,4 @@
-import { useEffect, useRef, type ReactNode } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import {
   AlertCircle,
   ArrowRight,
@@ -6,7 +6,6 @@ import {
   Check,
   Clock3,
   Dice5,
-  Heart,
   LoaderCircle,
   Sparkles,
   Star,
@@ -16,8 +15,7 @@ import {
 import { Link } from 'react-router';
 import { errorMessage } from '../api/client';
 import { useApp } from '../store/AppProvider';
-import { useState } from 'react';
-import type { Game } from '../api/models';
+import { shelfLabels, type Game, type ShelfFlag, type UserGame } from '../api/models';
 
 export function Loading({ label = 'Đang tìm những lựa chọn dành cho bạn…' }: { label?: string }) {
   return (
@@ -155,12 +153,12 @@ export function GameMeta({ game }: { game: Game }) {
 }
 export function GameCard({ game, reason }: { game: Game; reason?: string }) {
   const { records, update, sessionLoading, shelfLoading, notice, notify } = useApp();
-  const saved = records.find((record) => record.gameId === game.id)?.wishlist ?? false;
+  const record = records.find((item) => item.gameId === game.id);
   const [saving, setSaving] = useState(false);
-  async function toggle() {
+  async function save(patch: Partial<Omit<UserGame, 'gameId'>>) {
     setSaving(true);
     try {
-      await update(game.id, { wishlist: !saved });
+      await update(game.id, patch);
     } catch (error) {
       notify(errorMessage(error));
     } finally {
@@ -173,24 +171,6 @@ export function GameCard({ game, reason }: { game: Game; reason?: string }) {
         <Link to={`/games/${game.id}`} aria-label={`Xem ${game.name}`}>
           <GameCover game={game} />
         </Link>
-        {game.featured && (
-          <span className="featured-label">
-            <Sparkles size={11} /> GỢI Ý KHÁM PHÁ
-          </span>
-        )}
-        <button
-          className={`save-button ${saved ? 'saved' : ''}`}
-          aria-label={`${saved ? 'Bỏ muốn thử' : 'Muốn thử'} ${game.name}`}
-          aria-pressed={saved}
-          disabled={saving || sessionLoading || shelfLoading || !!notice}
-          onClick={() => void toggle()}
-        >
-          {saving ? (
-            <LoaderCircle size={18} className="spin" />
-          ) : (
-            <Heart size={18} fill={saved ? 'currentColor' : 'none'} />
-          )}
-        </button>
       </div>
       <div className="card-content">
         <div className="card-genre">{game.genres?.slice(0, 2).join(' · ') || 'Boardgame'}</div>
@@ -201,6 +181,32 @@ export function GameCard({ game, reason }: { game: Game; reason?: string }) {
           {game.tagline || game.description || 'Một lựa chọn mới cho buổi chơi của bạn.'}
         </p>
         <GameMeta game={game} />
+        <fieldset
+          className="mt-3 border-t border-[#e4e9df] pt-2"
+          disabled={saving || sessionLoading || shelfLoading || !!notice}
+          aria-busy={saving}
+        >
+          <legend className="sr-only">Kệ game cho {game.name}</legend>
+          <div className="flex flex-wrap gap-1.5">
+            {(Object.keys(shelfLabels) as ShelfFlag[]).map((flag) => {
+              const selected = record?.[flag] ?? false;
+              const label = shelfLabels[flag];
+              return (
+                <button
+                  type="button"
+                  key={flag}
+                  aria-label={`${selected ? 'Bỏ ' + label.toLocaleLowerCase('vi') : label} ${game.name}`}
+                  aria-pressed={selected}
+                  className="min-h-9 rounded-md border border-[#d6dfd1] px-2 text-[11px] text-[#345749] aria-pressed:border-[#234e40] aria-pressed:bg-[#234e40] aria-pressed:text-white"
+                  onClick={() => void save({ [flag]: !selected })}
+                >
+                  {label}
+                </button>
+              );
+            })}
+          </div>
+          <Rating value={record?.rating ?? null} onChange={(rating) => void save({ rating })} />
+        </fieldset>
         {reason && (
           <p className="recommendation-reason">
             <Sparkles size={15} />
@@ -252,7 +258,7 @@ export function Rating({
             key={star}
             aria-label={`Chấm ${star} sao`}
             aria-pressed={value === star}
-            onClick={() => onChange(star)}
+            onClick={() => onChange(star === value ? null : star)}
           >
             <Star size={24} fill={star <= (value ?? 0) ? 'currentColor' : 'none'} />
           </button>

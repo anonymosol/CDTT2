@@ -1,10 +1,9 @@
 import { useState, type FormEvent } from 'react';
 import { Link, Navigate, useNavigate } from 'react-router';
-import { ArrowRight, Dice5, Download, LogOut, ShieldCheck, Trash2 } from 'lucide-react';
+import { ArrowRight, Dice5, ShieldCheck } from 'lucide-react';
 import { api, errorMessage } from '../api/client';
 import { credentialsSchema, isDemo } from '../api/models';
 import { useApp } from '../store/AppProvider';
-import { Loading, Modal, PageIntro } from '../components/ui';
 
 export function Auth({ mode }: { mode: 'login' | 'register' }) {
   const { user, sessionLoading, authenticate } = useApp();
@@ -159,115 +158,6 @@ export function Auth({ mode }: { mode: 'login' | 'register' }) {
           Tiếp tục khám phá với chế độ khách
         </Link>
       </section>
-    </div>
-  );
-}
-
-export function Account() {
-  const { user, sessionLoading, logout, deleteAccount, notify } = useApp();
-  const [confirm, setConfirm] = useState(false),
-    [busy, setBusy] = useState(false),
-    [error, setError] = useState('');
-  const navigate = useNavigate();
-  if (sessionLoading) return <Loading />;
-  if (!user) return <Navigate to="/login" replace />;
-  async function exportData() {
-    setError('');
-    try {
-      const data = await api.export();
-      const url = URL.createObjectURL(
-        new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' }),
-      );
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = 'boardgame-du-lieu-ca-nhan.json';
-      link.click();
-      setTimeout(() => URL.revokeObjectURL(url), 1000);
-      notify('Đã tải dữ liệu của bạn.');
-    } catch (error) {
-      setError(errorMessage(error));
-    }
-  }
-  return (
-    <div className="content-page reading-page">
-      <PageIntro eyebrow="GÓC RIÊNG CỦA BẠN" title="Tài khoản">
-        <p>Bạn kiểm soát dữ liệu và bộ sưu tập của mình.</p>
-      </PageIntro>
-      <section className="reading-card account-card">
-        <span className="avatar large">{user.name.slice(0, 1).toUpperCase()}</span>
-        <div>
-          <h2>{user.name}</h2>
-          <p>{user.email}</p>
-        </div>
-      </section>
-      <section className="reading-card account-actions">
-        <button className="button secondary" onClick={() => void exportData()}>
-          <Download size={17} />
-          Xuất dữ liệu của tôi
-        </button>
-        <button
-          className="button secondary"
-          onClick={() =>
-            void logout()
-              .then(() => navigate('/games'))
-              .catch((error) => setError(errorMessage(error)))
-          }
-        >
-          <LogOut size={17} />
-          Đăng xuất
-        </button>
-        <button className="button danger" onClick={() => setConfirm(true)}>
-          <Trash2 size={17} />
-          Xóa tài khoản
-        </button>
-      </section>
-      {error && (
-        <p className="field-error" role="alert">
-          {error}
-        </p>
-      )}
-      {confirm && (
-        <Modal
-          title="Xóa tài khoản này?"
-          close={() => {
-            if (!busy) setConfirm(false);
-          }}
-        >
-          <p>
-            Tài khoản cùng kệ và dữ liệu liên quan sẽ được xóa khỏi dịch vụ. Thao tác này không thể
-            khôi phục.
-          </p>
-          {error && (
-            <p className="field-error" role="alert">
-              {error}
-            </p>
-          )}
-          <div className="modal-actions">
-            <button className="button secondary" disabled={busy} onClick={() => setConfirm(false)}>
-              Giữ tài khoản
-            </button>
-            <button
-              className="button danger"
-              disabled={busy}
-              onClick={async () => {
-                setBusy(true);
-                setError('');
-                try {
-                  await deleteAccount();
-                  setConfirm(false);
-                  navigate('/games');
-                } catch (error) {
-                  setError(errorMessage(error));
-                } finally {
-                  setBusy(false);
-                }
-              }}
-            >
-              {busy ? 'Đang xóa…' : 'Xác nhận xóa'}
-            </button>
-          </div>
-        </Modal>
-      )}
     </div>
   );
 }

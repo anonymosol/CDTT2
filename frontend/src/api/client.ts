@@ -3,7 +3,6 @@ import { z } from 'zod';
 import type { paths } from './schema';
 import {
   gameSchema,
-  learnSchema,
   recommendationSchema,
   userGameSchema,
   userSchema,
@@ -54,7 +53,6 @@ export type Filters = {
   weight?: number;
   genre?: string;
   page?: number;
-  sort?: 'featured' | 'name' | 'duration';
 };
 export const api = {
   async games(filters: Filters = {}, signal?: AbortSignal) {
@@ -72,12 +70,6 @@ export const api = {
     return check(
       await client.GET('/api/games/{id}', { params: { path: { id } }, signal }),
       gameSchema,
-    );
-  },
-  async learn(id: string, signal?: AbortSignal) {
-    return check(
-      await client.GET('/api/games/{id}/learn', { params: { path: { id } }, signal }),
-      learnSchema,
     );
   },
   async recommend(query: string, excludedIds: string[], signal?: AbortSignal) {
@@ -126,15 +118,5 @@ export const api = {
       await client.POST('/api/me/merge-guest', { body: { games } }),
       z.array(userGameSchema),
     );
-  },
-  async export() {
-    return check(
-      await client.GET('/api/me/export'),
-      z.object({ user: userSchema, games: z.array(userGameSchema) }),
-    );
-  },
-  async deleteAccount() {
-    const result = await client.DELETE('/api/me');
-    if (!result.response.ok) check(result, z.unknown());
   },
 };

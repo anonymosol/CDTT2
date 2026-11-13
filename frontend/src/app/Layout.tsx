@@ -107,7 +107,7 @@ export function Layout() {
       ? 'Gợi ý cho bạn'
       : location.pathname.startsWith('/onboarding')
         ? 'Làm quen sở thích'
-        : location.pathname.startsWith('/account')
+        : location.pathname === '/login' || location.pathname === '/register'
           ? 'Tài khoản'
           : 'Khám phá';
   useEffect(() => {
@@ -207,10 +207,10 @@ export function Layout() {
               <span className="session-wait">Đang kiểm tra phiên…</span>
             ) : user ? (
               <>
-                <Link className="account-link" to="/account">
+                <span className="account-link">
                   <span className="avatar">{user.name.slice(0, 1).toUpperCase()}</span>
                   <span>{user.name}</span>
-                </Link>
+                </span>
                 <button
                   className="icon-button"
                   aria-label="Đăng xuất"
@@ -230,7 +230,7 @@ export function Layout() {
         {isDemo && (
           <div className="demo-strip">
             <span className="status-dot" />
-            Bản trải nghiệm · Game, tài khoản và gợi ý mẫu<Link to="/about">Tìm hiểu</Link>
+            Bản trải nghiệm · Game, tài khoản và gợi ý mẫu
           </div>
         )}
         {!online && (
@@ -257,9 +257,6 @@ export function Layout() {
             <Dice5 size={15} /> Boardgame Advisor
           </span>
           <span>Tìm game hợp gu. Dành thời gian cho nhau.</span>
-          <Link to="/about">
-            Về dự án <ArrowUpRight size={13} />
-          </Link>
         </footer>
       </div>
       {toast && (

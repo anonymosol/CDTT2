@@ -5,7 +5,6 @@ export type Game = components['schemas']['Game'];
 export type UserGame = components['schemas']['UserGame'];
 export type User = components['schemas']['User'];
 export type Recommendations = components['schemas']['Recommendations'];
-export type LearnMaterial = components['schemas']['LearnMaterial'];
 export type ShelfFlag = 'played' | 'owned' | 'wishlist' | 'disliked';
 export const shelfLabels: Record<ShelfFlag, string> = {
   played: 'Đã chơi',
@@ -27,8 +26,6 @@ export const gameSchema = z.object({
   tagline: z.string().optional(),
   imageUrl: z.string().optional(),
   color: z.string().optional(),
-  featured: z.boolean().optional(),
-  hasRules: z.boolean().optional(),
 });
 export const userSchema = z.object({ id: z.string(), name: z.string(), email: z.email() });
 export const userGameSchema = z.object({
@@ -53,12 +50,6 @@ export const recommendationSchema = z.object({
   items: z.array(z.object({ game: gameSchema, reason: z.string() })).max(5),
   mode: z.enum(['demo', 'live']),
   interpretation: z.string(),
-});
-export const learnSchema = z.object({
-  title: z.string(),
-  source: z.string(),
-  sections: z.array(z.object({ heading: z.string(), text: z.string() })),
-  setup: z.array(z.string()),
 });
 export const emptyRecord = (gameId: string): UserGame => ({
   gameId,

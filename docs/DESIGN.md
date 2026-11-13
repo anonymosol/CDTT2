@@ -38,9 +38,9 @@ trong component. CSS có tên ngữ nghĩa giữ các trạng thái/phần dùng
 │ Làm quen gu    │ └───────────────────────┴────────────────────────┘ │
 │                │ Bộ sưu tập                               Bộ lọc   │
 │                │ Tìm tên | Người | Phút | Độ khó | Áp dụng          │
-│                │ Thể loại...                         Sắp xếp       │
+│                │ Thể loại                                          │
 │                │ ┌────────────┐ ┌────────────┐ ┌────────────┐      │
-│                │ │ Hình + ♥   │ │ Hình + ♥   │ │ Hình + ♥   │      │
+│                │ │ Hình       │ │ Hình       │ │ Hình       │      │
 │                │ │ Tên + meta │ │ Tên + meta │ │ Tên + meta │      │
 │                │ └────────────┘ └────────────┘ └────────────┘      │
 │                │ Phân trang                                        │
@@ -61,7 +61,7 @@ trong component. CSS có tên ngữ nghĩa giữ các trạng thái/phần dùng
 │ (bộ lọc mở theo yêu cầu)    │
 │ Chip thể loại...            │
 │ ┌─────────────────────────┐ │
-│ │ Ảnh                  ♥ │ │
+│ │ Ảnh                    │ │
 │ │ Tên, mô tả, metadata    │ │
 │ └─────────────────────────┘ │
 │ Một cột thẻ + phân trang    │
@@ -70,7 +70,7 @@ trong component. CSS có tên ngữ nghĩa giữ các trạng thái/phần dùng
 
 ## Trạng thái và tương tác
 
-- GameCard có liên kết ảnh/tên; nút muốn thử tách khỏi liên kết.
+- GameCard có liên kết ảnh và tên. Bốn nút trạng thái và nút chọn sao đặt trên từng thẻ.
 - Loading có role=status; lỗi có role=alert và nút retry; empty có đường đi tiếp.
 - Bộ lọc có draft state và URL applied state; thay filter reset page.
 - Kệ dùng nhiều nhãn boolean, điểm nullable; ghi chú có giới hạn 1.000 ký tự.
@@ -81,8 +81,7 @@ trong component. CSS có tên ngữ nghĩa giữ các trạng thái/phần dùng
 
 ## Artwork
 
-12 SVG poster được tạo bằng script gốc của dự án. Không dùng hình game thương mại
-hoặc hotlink tài nguyên. Xem frontend/scripts/generate-art.mjs.
+Mười hai tên game và metadata hư cấu dùng cho kiểm thử được khai báo tại `frontend/src/mocks/catalog.ts`. Các hình minh họa tương ứng được tạo bằng `frontend/scripts/generate-art.mjs`. Nhóm có thể dùng các hình gốc này cho bản demo.
 
 ## Bàn giao cho phần frontend khác
 

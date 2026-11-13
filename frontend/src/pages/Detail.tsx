@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useParams } from 'react-router';
-import { ArrowLeft, ArrowRight, BookOpen, BookmarkPlus, Check, Compass, Users } from 'lucide-react';
+import { ArrowLeft, BookmarkPlus, Check, Compass, Users } from 'lucide-react';
 import { api } from '../api/client';
 import { useResource } from '../hooks/useResource';
 import { useApp } from '../store/AppProvider';
@@ -73,13 +73,6 @@ export function Detail() {
               <BookmarkPlus size={18} />
               Lưu & chấm điểm
             </button>
-            {game.hasRules && (
-              <Link className="button secondary" to={`/games/${game.id}/learn`}>
-                <BookOpen size={17} />
-                Làm quen luật
-                <ArrowRight size={16} />
-              </Link>
-            )}
           </div>
           {record && (
             <div className="saved-labels">
@@ -99,59 +92,7 @@ export function Detail() {
           </p>
         </section>
       </div>
-      <div className="detail-bottom">
-        <BookOpen size={24} />
-        <div>
-          <h2>Một chiếc hộp, một cách kết nối</h2>
-          <p>
-            {game.hasRules
-              ? 'Đọc phần làm quen luật trước khi chơi. Luôn kiểm tra đúng phiên bản tài liệu của game.'
-              : 'Tài liệu luật đã duyệt đang được bổ sung. Bạn vẫn có thể lưu game vào kệ.'}
-          </p>
-        </div>
-      </div>
       {editing && <ShelfEditor game={game} close={() => setEditing(false)} />}
-    </div>
-  );
-}
-
-export function Learn() {
-  const { gameId = '' } = useParams();
-  const resource = useResource((signal) => api.learn(gameId, signal), gameId);
-  return (
-    <div className="content-page reading-page">
-      <Link className="back-link" to={`/games/${gameId}`}>
-        <ArrowLeft size={16} />
-        Về chi tiết game
-      </Link>
-      {resource.loading ? (
-        <Loading label="Đang mở hướng dẫn…" />
-      ) : resource.error || !resource.data ? (
-        <ErrorState message={resource.error || 'Chưa có tài liệu.'} retry={resource.reload} />
-      ) : (
-        <>
-          <span className="eyebrow">CÙNG BẮT ĐẦU MỘT VÁN CHƠI</span>
-          <h1>{resource.data.title}</h1>
-          <p className="source-note">Nguồn: {resource.data.source}</p>
-          <section className="reading-card">
-            <h2>Chuẩn bị bàn chơi</h2>
-            <ul className="setup-list">
-              {resource.data.setup.map((item, index) => (
-                <li key={item}>
-                  <span>{index + 1}</span>
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </section>
-          {resource.data.sections.map((section) => (
-            <section className="reading-card" key={section.heading}>
-              <h2>{section.heading}</h2>
-              <p>{section.text}</p>
-            </section>
-          ))}
-        </>
-      )}
     </div>
   );
 }

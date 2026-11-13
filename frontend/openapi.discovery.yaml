@@ -1,0 +1,279 @@
+openapi: 3.1.0
+info:
+  title: Boardgame Advisor API
+  version: 0.2.0
+  description: >-
+    Discovery contract draft for local MSW and type generation. GET /api/games
+    retains the shared array response. Review this draft with the backend owners.
+servers:
+  - url: http://localhost:3000
+paths:
+  /api/games:
+    get:
+      summary: List available boardgames
+      parameters:
+        - { name: players, in: query, schema: { type: integer, minimum: 1, maximum: 20 } }
+        - {
+            name: time,
+            in: query,
+            description: Maximum minutes,
+            schema: { type: integer, minimum: 1 },
+          }
+        - {
+            name: weight,
+            in: query,
+            description: Maximum difficulty,
+            schema: { type: number, minimum: 1, maximum: 5 },
+          }
+        - { name: genre, in: query, schema: { type: string } }
+        - { name: q, in: query, schema: { type: string, maxLength: 100 } }
+        - { name: page, in: query, schema: { type: integer, minimum: 1, default: 1 } }
+      responses:
+        '200':
+          description: Array response retained. Default page size 6; no matches returns [].
+          headers:
+            X-Total-Count: { schema: { type: integer } }
+            X-Page-Size: { schema: { type: integer } }
+          content:
+            application/json:
+              schema: { type: array, items: { $ref: '#/components/schemas/Game' } }
+        '400': { $ref: '#/components/responses/Error' }
+        '500': { $ref: '#/components/responses/Error' }
+  /api/games/{id}:
+    parameters:
+      - { name: id, in: path, required: true, schema: { type: string } }
+    get:
+      responses:
+        '200':
+          {
+            description: Game details,
+            content: { application/json: { schema: { $ref: '#/components/schemas/Game' } } },
+          }
+        '404': { $ref: '#/components/responses/Error' }
+  /api/recommend:
+    post:
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [query]
+              properties:
+                query: { type: string, minLength: 3, maxLength: 1000 }
+                excludedIds: { type: array, maxItems: 200, items: { type: string } }
+      responses:
+        '200':
+          {
+            description: Up to five recommendations,
+            content:
+              { application/json: { schema: { $ref: '#/components/schemas/Recommendations' } } },
+          }
+        '400': { $ref: '#/components/responses/Error' }
+        '429': { $ref: '#/components/responses/Error' }
+        '503': { $ref: '#/components/responses/Error' }
+  /api/auth/register:
+    post:
+      requestBody: { $ref: '#/components/requestBodies/Credentials' }
+      responses:
+        '201':
+          {
+            description: Live session via HttpOnly cookie,
+            content: { application/json: { schema: { $ref: '#/components/schemas/User' } } },
+          }
+        '400': { $ref: '#/components/responses/Error' }
+        '409': { $ref: '#/components/responses/Error' }
+  /api/auth/login:
+    post:
+      requestBody: { $ref: '#/components/requestBodies/Credentials' }
+      responses:
+        '200':
+          {
+            description: Live session via HttpOnly cookie,
+            content: { application/json: { schema: { $ref: '#/components/schemas/User' } } },
+          }
+        '401': { $ref: '#/components/responses/Error' }
+  /api/auth/logout:
+    post:
+      security: [{ session: [] }]
+      responses:
+        '204': { description: Session cleared }
+        '401': { $ref: '#/components/responses/Error' }
+  /api/auth/google:
+    post:
+      description: Backend OAuth integration; demo reports unavailable.
+      responses:
+        '200':
+          description: Same-origin OAuth URL
+          content:
+            {
+              application/json:
+                {
+                  schema:
+                    {
+                      type: object,
+                      required: [url],
+                      properties: { url: { type: string, format: uri } },
+                    },
+                },
+            }
+        '503': { $ref: '#/components/responses/Error' }
+  /api/me:
+    get:
+      security: [{ session: [] }]
+      responses:
+        '200':
+          {
+            description: Current session,
+            content: { application/json: { schema: { $ref: '#/components/schemas/User' } } },
+          }
+        '401': { $ref: '#/components/responses/Error' }
+  /api/me/games:
+    get:
+      security: [{ session: [] }]
+      parameters:
+        - {
+            name: status,
+            in: query,
+            schema: { type: string, enum: [played, owned, wishlist, disliked] },
+          }
+      responses:
+        '200':
+          {
+            description: Shelf,
+            content:
+              {
+                application/json:
+                  { schema: { type: array, items: { $ref: '#/components/schemas/UserGame' } } },
+              },
+          }
+        '401': { $ref: '#/components/responses/Error' }
+  /api/me/games/{gameId}:
+    parameters:
+      - { name: gameId, in: path, required: true, schema: { type: string } }
+    put:
+      security: [{ session: [] }]
+      description: Idempotent full record. User identity comes from server session.
+      requestBody:
+        required: true
+        content: { application/json: { schema: { $ref: '#/components/schemas/UserGame' } } }
+      responses:
+        '200':
+          {
+            description: Saved,
+            content: { application/json: { schema: { $ref: '#/components/schemas/UserGame' } } },
+          }
+        '400': { $ref: '#/components/responses/Error' }
+        '401': { $ref: '#/components/responses/Error' }
+  /api/me/merge-guest:
+    post:
+      security: [{ session: [] }]
+      description: >-
+        Idempotent by gameId. Flags use OR; account rating/notes win if present.
+        Returns complete merged shelf. Clear guest data only after success.
+      requestBody:
+        required: true
+        content:
+          {
+            application/json:
+              {
+                schema:
+                  {
+                    type: object,
+                    required: [games],
+                    properties:
+                      {
+                        games:
+                          {
+                            type: array,
+                            maxItems: 200,
+                            items: { $ref: '#/components/schemas/UserGame' },
+                          },
+                      },
+                  },
+              },
+          }
+      responses:
+        '200':
+          {
+            description: Merged shelf,
+            content:
+              {
+                application/json:
+                  { schema: { type: array, items: { $ref: '#/components/schemas/UserGame' } } },
+              },
+          }
+        '400': { $ref: '#/components/responses/Error' }
+        '401': { $ref: '#/components/responses/Error' }
+components:
+  securitySchemes:
+    session: { type: apiKey, in: cookie, name: session }
+  responses:
+    Error:
+      description: Live backend must enforce authorization and CSRF protection.
+      content: { application/json: { schema: { $ref: '#/components/schemas/ApiError' } } }
+  requestBodies:
+    Credentials:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required: [email, password]
+            properties:
+              name: { type: string, minLength: 1, maxLength: 60 }
+              email: { type: string, format: email, maxLength: 254 }
+              password: { type: string, minLength: 8, maxLength: 128, writeOnly: true }
+  schemas:
+    Game:
+      allOf:
+        - $ref: '../docs/openapi.yaml#/components/schemas/Game'
+        - type: object
+          properties:
+            weight: { type: number, minimum: 1, maximum: 5 }
+            minAge: { type: integer, minimum: 0 }
+            genres: { type: array, items: { type: string } }
+            mechanics: { type: array, items: { type: string } }
+            description: { type: string }
+            tagline: { type: string }
+            imageUrl: { type: string }
+            color: { type: string }
+    User:
+      type: object
+      required: [id, name, email]
+      properties:
+        id: { type: string }
+        name: { type: string }
+        email: { type: string, format: email }
+    UserGame:
+      type: object
+      required: [gameId, played, owned, wishlist, disliked, rating, notes]
+      properties:
+        gameId: { type: string }
+        played: { type: boolean }
+        owned: { type: boolean }
+        wishlist: { type: boolean }
+        disliked: { type: boolean }
+        rating: { type: [integer, 'null'], minimum: 1, maximum: 5 }
+        notes: { type: string, maxLength: 1000 }
+    ApiError:
+      type: object
+      required: [message]
+      properties:
+        message: { type: string }
+        retryAfter: { type: integer, minimum: 0 }
+    Recommendations:
+      type: object
+      required: [items, mode, interpretation]
+      properties:
+        mode: { type: string, enum: [demo, live] }
+        interpretation: { type: string }
+        items:
+          type: array
+          maxItems: 5
+          items:
+            type: object
+            required: [game, reason]
+            properties:
+              game: { $ref: '#/components/schemas/Game' }
+              reason: { type: string }

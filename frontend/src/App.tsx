@@ -2,12 +2,11 @@ import { Component, type ReactNode } from 'react';
 import { Navigate, Route, Routes } from 'react-router';
 import { Layout } from './app/Layout';
 import { Discover } from './pages/Discover';
-import { Detail, Learn } from './pages/Detail';
+import { Detail } from './pages/Detail';
 import { Recommend } from './pages/Recommend';
 import { Library } from './pages/Library';
-import { Account, Auth } from './pages/Auth';
+import { Auth } from './pages/Auth';
 import { Onboarding } from './pages/Onboarding';
-import { About } from './pages/About';
 import { EmptyState, ExploreLink } from './components/ui';
 
 export class ErrorBoundary extends Component<{ children: ReactNode }, { failed: boolean }> {
@@ -36,14 +35,11 @@ export default function App() {
         <Route index element={<Navigate to="/games" replace />} />
         <Route path="games" element={<Discover />} />
         <Route path="games/:gameId" element={<Detail />} />
-        <Route path="games/:gameId/learn" element={<Learn />} />
         <Route path="recommend" element={<Recommend />} />
         <Route path="library" element={<Library />} />
         <Route path="onboarding" element={<Onboarding />} />
         <Route path="login" element={<Auth key="login" mode="login" />} />
         <Route path="register" element={<Auth key="register" mode="register" />} />
-        <Route path="account" element={<Account />} />
-        <Route path="about" element={<About />} />
         <Route
           path="*"
           element={

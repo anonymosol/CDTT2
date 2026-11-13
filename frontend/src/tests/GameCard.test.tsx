@@ -54,3 +54,25 @@ it('removes an existing wishlist flag', async () => {
   await userEvent.click(screen.getByRole('button', { name: 'Bỏ muốn thử Game X' }));
   expect(context.update).toHaveBeenCalledWith('x', { wishlist: false });
 });
+it('exposes independent quick actions and can set or clear a rating', async () => {
+  context.records = [{ ...emptyRecord('x'), played: true, rating: 3 }];
+  context.update.mockResolvedValue(undefined);
+  render(
+    <MemoryRouter>
+      <GameCard game={{ id: 'x', name: 'Game X' }} />
+    </MemoryRouter>,
+  );
+  const user = userEvent.setup();
+  expect(screen.getByRole('button', { name: 'Bỏ đã chơi Game X' })).toHaveAttribute(
+    'aria-pressed',
+    'true',
+  );
+  await user.click(screen.getByRole('button', { name: 'Đang sở hữu Game X' }));
+  expect(context.update).toHaveBeenLastCalledWith('x', { owned: true });
+  await user.click(screen.getByRole('button', { name: 'Không thích Game X' }));
+  expect(context.update).toHaveBeenLastCalledWith('x', { disliked: true });
+  await user.click(screen.getByRole('button', { name: 'Chấm 4 sao' }));
+  expect(context.update).toHaveBeenLastCalledWith('x', { rating: 4 });
+  await user.click(screen.getByRole('button', { name: 'Chấm 3 sao' }));
+  expect(context.update).toHaveBeenLastCalledWith('x', { rating: null });
+});

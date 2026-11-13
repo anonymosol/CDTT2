@@ -26,11 +26,6 @@ describe('Catalog and recommendation fixtures', () => {
   it('supports Vietnamese accent-insensitive search', () => {
     expect(filterGames(games, new URLSearchParams('q=dao+may'))[0]?.id).toBe('dao-may');
   });
-  it('sorts all matches before pagination', () => {
-    const sorted = filterGames(games, new URLSearchParams('sort=duration'));
-    expect(sorted[0].id).toBe('bua-tiec-sao');
-    expect(sorted.at(-1)?.id).toBe('thuong-cang');
-  });
   it('never recommends excluded or out-of-catalog games', () => {
     const result = sampleRecommendations('4 người, 45 phút, thích hợp tác', ['dao-may']);
     expect(result.mode).toBe('demo');

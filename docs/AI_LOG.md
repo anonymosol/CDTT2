@@ -44,3 +44,11 @@ For each entry, capture:
 
 Người học cần dùng Copilot review/giải thích mã hoặc thực hiện một tác vụ thật,
 lưu prompt/output/diff và kiểm chứng vào mục riêng. Không sửa tên công cụ ở mục này.
+
+## 2026-11-13 — Rà soát phạm vi Thành viên 3
+
+- **Công cụ** Codex.
+- **Yêu cầu** Đối chiếu bản Frontend Khám phá với khung sườn và kiểm tra nhánh riêng trước khi đưa mã lên GitHub.
+- **Điều chỉnh** Bỏ giao diện học luật mẫu, xuất/xóa tài khoản, trang giới thiệu và sắp xếp danh sách. Thêm đủ bốn trạng thái và chọn sao trên thẻ game. Đưa schema đề xuất vào bản nháp OpenAPI của frontend để nhóm backend duyệt.
+- **Kiểm chứng** TypeScript, 15 ca Vitest, 16 ca Playwright trên hai kích thước, build live/demo và smoke test PWA. Xem `docs/FRONTEND_VALIDATION.md`.
+- **Phối hợp** Kiểm tra merge mô phỏng cho thấy xung đột với nhánh Học luật/Quản trị tại các tệp nền. Phần so sánh công cụ theo mục 7 còn chờ các lượt thử thực tế.

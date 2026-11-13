@@ -1,15 +1,15 @@
-# Kiểm chứng frontend ngày 07/11/2026
+# Kiểm chứng frontend ngày 13/11/2026
 
 Các kết quả dưới đây được chạy trên máy Windows hiện tại, không phải kết quả CI
 GitHub hoặc thử nghiệm người dùng. Dùng Node 24.22.1; dependency được khóa trong
-frontend/package-lock.json. CI được cấu hình dùng Node 22 nhưng chưa chạy trên GitHub.
+frontend/package-lock.json. Kết quả kiểm tra CI của nhóm sẽ được ghi nhận khi có PR.
 
 | Kiểm tra | Kết quả đã quan sát |
 |---|---|
 | Sinh kiểu OpenAPI | Thành công |
 | TypeScript strict, noUnusedLocals, noUnusedParameters | Thành công trong build cuối |
 | Vitest | 3 file, 15/15 test đạt |
-| Playwright | 16/16 test đạt: 8 tình huống × desktop/mobile Chromium |
+| Playwright | 16/16 test đạt: 8 tình huống thuộc ba luồng × desktop/mobile Chromium |
 | Kiểm tra layout | 6 route × 360/390/768/1440 px, không tràn ngang |
 | Lỗi JavaScript trong kiểm tra trực quan | Không ghi nhận pageerror |
 | Live production build | Thành công; manifest và service worker được tạo |
@@ -74,3 +74,11 @@ hư cấu và MSW. Cần kiểm thử tích hợp sau khi backend và dữ liệ
 - Selector test trùng hai nút đóng menu: giới hạn vào sidebar bằng role complementary.
 
 Các lỗi đã được chỉnh và kiểm chứng lại. Không đổi dữ liệu hoặc bỏ test để che lỗi.
+
+## Ranh giới bàn giao
+
+Mục 5.4 của khung sườn giao Thành viên 3 phần thiết kế, khung/PWA, tìm và gợi ý game, kệ cá nhân, đăng nhập/đăng ký và gộp kệ khách. Thẻ game cung cấp bốn nút trạng thái và chọn sao. Ba nhóm Playwright tương ứng với khám phá, gợi ý và lưu game.
+
+Các API của bản MSW lấy kiểu từ `frontend/openapi.discovery.yaml`, có tham chiếu schema Game của nhóm. Thành viên 1–2 cần duyệt những schema mới trước khi dùng với backend. Mười hai game mẫu phục vụ kiểm thử giao diện. Việc nhập game vào bộ dữ liệu nhóm và so sánh công cụ AI ở mục 7 được theo dõi theo các đầu việc riêng trong khung sườn.
+
+Nhánh cục bộ là `feature/frontend-discovery`. Lượt kiểm tra merge mô phỏng với `origin/feature/frontend-learn-rules-admin` ghi nhận xung đột ở các tệp cấu hình ứng dụng, định tuyến, API client, MSW, README frontend và nhật ký AI. Hai thành viên cần thống nhất cách ghép các tệp này khi review PR.

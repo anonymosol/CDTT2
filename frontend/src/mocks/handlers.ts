@@ -8,7 +8,7 @@ import {
   type User,
   type UserGame,
 } from '../api/models';
-import { games, filterGames, learning, mergeRecords, sampleRecommendations } from './catalog';
+import { games, filterGames, mergeRecords, sampleRecommendations } from './catalog';
 
 const error = (message: string, status = 400) => HttpResponse.json({ message }, { status });
 const read = (key: string): unknown => {
@@ -57,13 +57,6 @@ export const handlers = [
       headers: { 'X-Total-Count': String(all.length), 'X-Page-Size': '6' },
     });
   }),
-  http.get('*/api/games/:id/learn', async ({ params }) => {
-    const failed = await fault();
-    if (failed) return failed;
-    return learning[String(params.id)]
-      ? HttpResponse.json(learning[String(params.id)])
-      : error('Chưa có tài liệu đã được duyệt cho game này.', 404);
-  }),
   http.get('*/api/games/:id', async ({ params }) => {
     const failed = await fault();
     if (failed) return failed;
@@ -108,19 +101,6 @@ export const handlers = [
   http.get('*/api/me', () => {
     const user = currentUser();
     return user ? HttpResponse.json(user) : error('Bạn chưa đăng nhập.', 401);
-  }),
-  http.delete('*/api/me', () => {
-    const user = currentUser();
-    if (!user) return error('Bạn chưa đăng nhập.', 401);
-    sessionStorage.removeItem(shelfKey(user));
-    sessionStorage.removeItem('bga-demo-user');
-    return new HttpResponse(null, { status: 204 });
-  }),
-  http.get('*/api/me/export', () => {
-    const user = currentUser();
-    return user
-      ? HttpResponse.json({ user, games: shelf(user) })
-      : error('Bạn chưa đăng nhập.', 401);
   }),
   http.get('*/api/me/games', ({ request }) => {
     const user = currentUser();

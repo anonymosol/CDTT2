@@ -101,7 +101,7 @@ export function Library() {
       ) : active.length === 0 ? (
         <EmptyState
           title="Kệ game đang chờ chiếc hộp đầu tiên"
-          description="Nhấn trái tim trên một game bạn thích, hoặc lưu những game đã từng chơi."
+          description="Chọn Muốn thử trên thẻ game bạn thích, hoặc lưu những game đã từng chơi."
         >
           <ExploreLink />
         </EmptyState>

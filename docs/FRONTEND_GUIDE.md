@@ -1,6 +1,6 @@
 # Học từ bản triển khai Frontend Khám phá
 
-Ngày thực hiện: 07/11/2026. Nhánh: `feature/frontend-discovery`.
+Ngày triển khai 07/11/2026. Ngày rà soát phạm vi 13/11/2026. Nhánh `feature/frontend-discovery`.
 Người dùng có nền tảng cơ bản, có khoảng 3–4 giờ học mỗi ngày.
 
 ## 1. Kết quả cần hiểu
@@ -31,7 +31,7 @@ phải được thực hiện và ghi minh chứng riêng, không được gán 
    trên trình duyệt; chỉ cập nhật thành công sau khi thao tác lưu hoàn tất.
 10. **Tài khoản và gộp.** API nhận diện người từ phiên; frontend không gửi user_id.
     Gộp có thể gọi lại mà không tạo trùng; xóa kệ khách sau xác nhận thành công.
-11. **Hoàn thiện.** Onboarding, trang học luật bàn giao, responsive, bàn phím,
+11. **Hoàn thiện.** Onboarding, responsive, bàn phím,
     dialog có focus, nguồn dữ liệu, offline và PWA.
 12. **Kiểm chứng và bàn giao.** Kiểm tra kiểu, test logic/component, trình duyệt
     desktop/di động, build; lưu bằng chứng và giới hạn thật trong nhật ký.
@@ -112,13 +112,12 @@ UX, không cung cấp bảo mật xác thực thật. Không lưu mật khẩu �
 |---|---|
 | Giao diện, điều hướng, lọc URL, xử lý lỗi | Mã frontend hoạt động |
 | Lưu khách trên IndexedDB | Lưu thật trên trình duyệt |
-| Game, hình minh họa, ba luật mẫu | Nội dung gốc nhưng hư cấu phục vụ demo |
+| Game và hình minh họa | Fixture hư cấu phục vụ kiểm thử frontend |
 | Gợi ý từ câu tự nhiên | Lọc từ khóa xác định trong MSW, chưa gọi LLM |
 | Đăng nhập/đăng ký | Phiên demo, không xác thực mật khẩu thật |
-| Gộp/xuất/xóa tài khoản | Luồng UI và API mock; live cần backend hiện thực |
+| Gộp kệ sau đăng nhập | Luồng giao diện chạy qua MSW. Chế độ live cần backend |
 | Google OAuth | Có xử lý chưa khả dụng; chưa tích hợp Google |
 | PWA | Cấu hình build live; không cache API, demo dùng MSW riêng |
-| Hỏi luật RAG, quản trị, hỏi lịch sử | Chưa thuộc kết quả bàn giao này |
 | So sánh Copilot với công cụ khác | Chưa thực hiện; không có số liệu để kết luận |
 
 ## 8. Kế hoạch tự học với 3–4 giờ/ngày
@@ -155,10 +154,10 @@ thành số liệu thực đo; không tạo ảnh hoặc hội thoại giả là
 
 ## 10. Checklist trước khi ghép backend
 
-- Nhóm review thay đổi OpenAPI và chính sách gộp; tạo PR sửa hợp đồng.
+- Thành viên 1–2 xem bản nháp `frontend/openapi.discovery.yaml` và thống nhất schema cùng nhóm. Thay đổi hợp đồng chung đi qua PR.
 - Backend hiện thực các endpoint và shape giống hợp đồng; xác thực/CSRF ở server.
 - Đặt VITE_API_MODE=live; bảo đảm thông báo demo biến mất và mock không khởi động.
-- Thử Network: filter, page, sort, auth cookie, 401, 429, 503 và phản hồi sai schema.
+- Thử Network: filter, page, auth cookie, 401, 429, 503 và phản hồi sai schema.
 - Thử hai tài khoản: không hiển thị kệ người trước; server không trả dữ liệu chéo.
 - Không đưa API key LLM vào frontend. Chỉ API server được gọi dịch vụ LLM.
 - Thay game mẫu bằng dữ liệu đã kiểm tra nguồn/giấy phép; không nhầm metadata hư cấu.

@@ -32,28 +32,23 @@ VITE_API_BASE_URL=
 ```
 
 Khởi động lại Vite. `/api` được proxy đến http://localhost:3000 trong dev.
-Backend hiện tại chưa hiện thực các endpoint nghiệp vụ. Ứng dụng sẽ hiện lỗi thật,
-không âm thầm thay bằng dữ liệu mẫu. Hợp đồng đề xuất nằm ở `docs/openapi.yaml`.
+Khi backend chưa có endpoint, giao diện hiển thị lỗi kết nối hoặc lỗi API.
+`frontend/openapi.discovery.yaml` tham chiếu schema Game trong `docs/openapi.yaml`
+và mô tả các API của bản thử MSW để nhóm backend duyệt.
 Nếu gọi backend ở origin khác, đặt `VITE_API_BASE_URL` và cấu hình cookie/CORS,
 CSRF phía backend đúng với môi trường. Không đặt khóa LLM vào biến `VITE_*`.
 
 ## Các luồng đã triển khai
 
-- `/games`: tìm kiếm không dấu, lọc số người/thời gian/độ khó/thể loại, sắp xếp,
+- `/games`: tìm kiếm không dấu, lọc số người/thời gian/độ khó/thể loại,
   phân trang, giữ bộ lọc trên URL, loading/empty/error và retry.
-- `/games/:id`: chi tiết; cập nhật nhiều nhãn, điểm sao và ghi chú.
+- Thẻ game có bốn nút trạng thái độc lập và chọn sao. `/games/:id` hiển thị
+  chi tiết, trạng thái, điểm và ghi chú.
 - `/recommend`: nhập câu tự nhiên, kết quả và lý do; loại game không thích,
   tùy chọn loại game đã chơi; trường hợp rỗng/lỗi/429 và timeout.
 - `/library`: kệ cá nhân, lọc nhãn, thống kê, chỉnh sửa; khách lưu IndexedDB.
 - `/onboarding`: chọn game đã chơi, chấm điểm hoặc bỏ qua.
-- `/login`, `/register`, `/account`: giao diện tài khoản, gộp kệ, xuất/xóa dữ liệu.
-  MSW mô phỏng phiên của tab và KHÔNG xác thực mật khẩu thật.
-- `/games/:id/learn`: trang bàn giao tối thiểu cho tài liệu học luật đã duyệt;
-  ba bản luật tự biên soạn của game hư cấu. Chưa có RAG/hỏi đáp luật.
-- `/about`: giải thích nguồn dữ liệu, chế độ và cách lưu kệ.
-
-Luồng hỏi luật RAG, quản trị và hỏi lịch sử thuộc các phần khác của đề tài,
-chưa được thực hiện trong bàn giao Thành viên 3 này.
+- `/login`, `/register`: giao diện tài khoản và hộp thoại gộp kệ. MSW mô phỏng phiên của tab.
 
 ## Kiểm chứng
 
@@ -66,7 +61,7 @@ npm run test:e2e
 npm run build
 ```
 
-Kiểu API được sinh từ OpenAPI và lưu trong `src/api/schema.d.ts`.
+Kiểu API được sinh từ `openapi.discovery.yaml` và lưu trong `src/api/schema.d.ts`.
 Không sửa tệp sinh tự động. Zod kiểm tra phản hồi ở thời điểm chạy.
 Playwright chạy các tình huống trên desktop và viewport di động Chromium.
 Đây là mô phỏng viewport, chưa thay thế kiểm tra trên điện thoại thật/Safari.
@@ -115,11 +110,11 @@ không xuất hiện trong luồng người dùng.
 12 game hư cấu được biên soạn tại `src/mocks/catalog.ts`. Hình SVG do mã nguồn
 `scripts/generate-art.mjs` tự tạo; không sao chép hình hộp game thương mại.
 Chạy `node scripts/generate-art.mjs` để tạo lại SVG. Icon PNG PWA là hình xúc xắc
-gốc của dự án. Ghi nguồn tại `data/LICENSES.md`.
+gốc của bản demo. Nguồn các fixture và hình minh họa được ghi trong `docs/DESIGN.md`.
 
 ## Giới hạn cần phối hợp
 
-- Backend mới có health check; cần review và hiện thực hợp đồng trước tích hợp.
+- Backend mới có health check; cần duyệt bản nháp API Khám phá và hiện thực các endpoint trước tích hợp.
 - Đăng nhập Google trả thông báo chưa khả dụng trong mock; cần OAuth ở backend.
 - Không có LLM thật, dữ liệu game thương mại, khảo sát người dùng hoặc số liệu
   so sánh Copilot với công cụ khác trong kết quả này.

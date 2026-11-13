@@ -35,11 +35,6 @@ export function Discover() {
   const [draft, setDraft] = useState({ q: '', players: '', time: '', weight: '' });
   const page = Math.floor(numeric(params.get('page')) ?? 1);
   const genre = params.get('genre') || '';
-  const sort = (
-    ['featured', 'name', 'duration'].includes(params.get('sort') || '')
-      ? params.get('sort')
-      : 'featured'
-  ) as Filters['sort'];
   const filters: Filters = {
     q: params.get('q') || undefined,
     players: numeric(params.get('players'), 20),
@@ -47,7 +42,6 @@ export function Discover() {
     weight: numeric(params.get('weight'), 5),
     genre: genre || undefined,
     page,
-    sort,
   };
   const resource = useResource((signal) => api.games(filters, signal), params.toString());
   useEffect(() => {
@@ -222,18 +216,6 @@ export function Discover() {
               </button>
             ))}
           </div>
-          <label className="sort-label">
-            Sắp xếp:
-            <select
-              aria-label="Sắp xếp game"
-              value={sort}
-              onChange={(event) => changeParam('sort', event.target.value)}
-            >
-              <option value="featured">Đề xuất</option>
-              <option value="name">Tên A–Z</option>
-              <option value="duration">Thời gian tăng dần</option>
-            </select>
-          </label>
         </div>
         {filtered && (
           <div className="active-filters">

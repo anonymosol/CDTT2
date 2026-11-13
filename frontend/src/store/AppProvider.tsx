@@ -22,7 +22,6 @@ type Context = {
   notify: (message: string) => void;
   clearNotice: () => void;
   reload: () => Promise<void>;
-  deleteAccount: () => Promise<void>;
 };
 const AppContext = createContext<Context | null>(null);
 export function AppProvider({ children }: { children: ReactNode }) {
@@ -146,11 +145,6 @@ export function AppProvider({ children }: { children: ReactNode }) {
     setGuestsToMerge([]);
     notify('Đã gộp kệ khách vào tài khoản.');
   }
-  async function deleteAccount() {
-    await api.deleteAccount();
-    await reload();
-    notify('Đã xóa tài khoản và dữ liệu của tài khoản.');
-  }
   return (
     <AppContext.Provider
       value={{
@@ -169,7 +163,6 @@ export function AppProvider({ children }: { children: ReactNode }) {
         notify,
         clearNotice: () => setNotice(''),
         reload,
-        deleteAccount,
       }}
     >
       {children}
