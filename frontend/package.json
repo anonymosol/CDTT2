@@ -1,0 +1,53 @@
+{
+  "name": "boardgame-advisor-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "openapi-typescript ./openapi.discovery.yaml -o src/api/schema.d.ts && tsc -b && vite build",
+    "build:demo": "openapi-typescript ./openapi.discovery.yaml -o src/api/schema.d.ts && tsc -b && vite build --mode demo",
+    "preview": "vite preview --host 127.0.0.1",
+    "typecheck": "tsc -b --pretty false",
+    "api:generate": "openapi-typescript ./openapi.discovery.yaml -o src/api/schema.d.ts",
+    "test": "vitest run",
+    "test:e2e": "playwright test"
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "^4.1.17",
+    "lucide-react": "^0.468.0",
+    "openapi-fetch": "^0.15.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "react-router": "^7.9.5",
+    "tailwindcss": "^4.1.17",
+    "zod": "^4.1.12"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.56.1",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/node": "^22.19.0",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.2",
+    "@vitejs/plugin-react": "^5.1.0",
+    "fake-indexeddb": "^6.2.4",
+    "jsdom": "^27.2.0",
+    "msw": "^2.12.0",
+    "openapi-typescript": "^7.10.1",
+    "prettier": "^3.9.10",
+    "typescript": "^5.9.3",
+    "vite": "^7.2.2",
+    "vite-plugin-pwa": "^1.1.0",
+    "vitest": "^3.2.4"
+  },
+  "msw": {
+    "workerDirectory": [
+      "public"
+    ]
+  }
+}
